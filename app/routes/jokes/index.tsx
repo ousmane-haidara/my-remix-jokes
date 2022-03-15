@@ -7,5 +7,5 @@ export default function JokesIndexRoute() {
         then it hit me.
       </p>
     </div>
-  );
+  )
 }
