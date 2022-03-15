@@ -22,8 +22,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        Hello World!
-        <Outlet />
+        <Outlet /> {/* route chiled structuration */}
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
