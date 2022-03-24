@@ -6,6 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
 } from "remix";
 import type { MetaFunction } from "remix";
 
@@ -35,10 +36,16 @@ export const links: LinksFunction = () => {
 
 
 export const meta: MetaFunction = () => {
-  return { title: "My remix jokes " };
+  return { title: "Remix: So great, it's funny!" };
 };
 
-export default function App() {
+function Document({
+  children,
+  title = `Remix: So great, it's funny!`,
+}: {
+  children: React.ReactNode;
+  title?: string;
+}) {
   return (
     <html lang="en">
       <head>
@@ -48,11 +55,47 @@ export default function App() {
         <Links />  {/* to include css with <link> */}
       </head>
       <body>
-        <Outlet /> {/* route chiled structuration */}
+        {children}
+        <LiveReload />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
       </body>
     </html>
+  );
+}
+
+export default function App() {
+  return (
+    <Document>
+      <Outlet /> {/* route chiled structuration */}
+    </Document>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+
+  return (
+    <Document
+      title={`${caught.status} ${caught.statusText}`}
+    >
+      <div className="error-container">
+        <h1>
+          {caught.status} {caught.statusText}
+        </h1>
+      </div>
+    </Document>
+  );
+}
+
+export function ErrorBoundary({ error }: { error: Error }) {
+  return (
+    <Document title="Uh-oh!">
+      <div className="error-container">
+        <h1>App Error</h1>
+        <pre>{error.message}</pre>
+      </div>
+    </Document>
   );
 }
