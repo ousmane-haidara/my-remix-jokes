@@ -1,4 +1,4 @@
-import type { LinksFunction } from "remix";
+import type { LinksFunction, MetaFunction } from "remix";
 import {
   Links,
   LiveReload,
@@ -8,7 +8,6 @@ import {
   ScrollRestoration,
   useCatch,
 } from "remix";
-import type { MetaFunction } from "remix";
 
 import globalStylesUrl from "./styles/global.css";
 import globalMediumStylesUrl from "./styles/global-medium.css";
@@ -36,7 +35,20 @@ export const links: LinksFunction = () => {
 
 
 export const meta: MetaFunction = () => {
-  return { title: "Remix: So great, it's funny!" };
+  const description = `Learn Remix and laugh at the same time!`;
+
+  return { 
+    charset: "utf-8",
+    description,
+    keywords: "Remix,jokes",
+    "twitter:image": "https://remix-jokes.lol/social.png",
+    "twitter:card": "summary_large_image",
+    "twitter:creator": "@remix_run",
+    "twitter:site": "@remix_run",
+    "twitter:title": "Remix Jokes",
+    "twitter:description": description,
+    viewport: "width=device-width,initial-scale=1",
+   };
 };
 
 function Document({
@@ -49,9 +61,8 @@ function Document({
   return (
     <html lang="en">
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
+        <title>{title}</title>
         <Links />  {/* to include css with <link> */}
       </head>
       <body>
